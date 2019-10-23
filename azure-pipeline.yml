@@ -5,5 +5,10 @@ steps:
 - task: NodeTool@0 
   inputs:
     versionSpec: '13.x'
+- task: CacheBeta@0
+  inputs:
+    key: npm | $(Agent.OS) | package-lock.json
+    path: node_modules
+  displayName: Cache npm
 - script: npm install
 - script: npm test
