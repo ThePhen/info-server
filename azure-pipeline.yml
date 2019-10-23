@@ -1,5 +1,7 @@
 pool:
   vmImage: 'ubuntu-16.04'
+variables:
+  npm_config_cache: $(Pipeline.Workspace)/.npm
 
 steps:
 - task: NodeTool@0 
@@ -8,7 +10,7 @@ steps:
 - task: CacheBeta@0
   inputs:
     key: npm | $(Agent.OS) | package-lock.json
-    path: node_modules
+    path: $(npm_config_cache)
   displayName: Cache npm
-- script: npm install
+- script: npm ci
 - script: npm test
